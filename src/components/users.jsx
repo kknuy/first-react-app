@@ -18,11 +18,6 @@ const Users = ({ users, ...rest }) => {
         });
     }, []);
     useEffect(() => {
-        api.users.fetchAll().then((data) => {
-            console.log("data", data);
-        });
-    }, []);
-    useEffect(() => {
         setCurrentPage(1);
     }, [selectedItem]);
 
@@ -34,7 +29,7 @@ const Users = ({ users, ...rest }) => {
     };
 
     const filteredUsers = selectedItem
-        ? users.filter((user) => user.profession === selectedItem)
+        ? users.filter((user) => JSON.stringify(user.profession) === JSON.stringify(selectedItem))
         : users;
     const count = filteredUsers.length;
     const userCrop = paginate(filteredUsers, currentPage, pageSize);
@@ -95,7 +90,7 @@ const Users = ({ users, ...rest }) => {
 };
 
 Users.propTypes = {
-    users: PropTypes.object.isRequired
+    users: PropTypes.array
 };
 
 export default Users;
